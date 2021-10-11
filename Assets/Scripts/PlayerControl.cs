@@ -12,8 +12,11 @@ public class PlayerControl : MonoBehaviour {
 	public Sprite defSprite;
 	public Sprite focSprite;
 	public Color defCol;
+	public Color transCol;
 	public Color focCol;
 	private SpriteRenderer spriteRender;
+	private int sparks = 16;
+	public GameObject sparkPrefab;
 	//Shooting
 	//Defense
 	//Pause/Menu
@@ -44,5 +47,28 @@ public class PlayerControl : MonoBehaviour {
 		//Defense
 		//Pause/Menu
 
+	}
+
+	void OnTriggerEnter2D(Collider2D other){
+    	if (other.gameObject.tag == "Bullet" | other.gameObject.tag == "Enemy"){
+        	this.SelfDestruct();
+    	}
+	}
+
+	public void SelfDestruct(){
+		Vector3 dir = new Vector3(1, 0, 0);
+		for(int i = 0; i < sparks; i++)
+        {
+			GameObject newSpark = Instantiate(sparkPrefab);
+			newSpark.transform.position = transform.position;
+			float angleDir = Mathf.Deg2Rad * i * 360/sparks;
+			dir = new Vector3(dir.x * Mathf.Cos(angleDir) - dir.y * Mathf.Sin(angleDir), dir.x * Mathf.Sin(angleDir) + dir.y * Mathf.Cos(angleDir), 0);
+			DeathSpark sparkComponent = newSpark.GetComponent<DeathSpark>();
+			sparkComponent.col1 = defCol;
+			sparkComponent.col2 = transCol;
+			sparkComponent.col3 = focCol;
+			sparkComponent.SetDirection(dir);
+        }
+		Destroy(this.gameObject);
 	}
 }

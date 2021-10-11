@@ -34,6 +34,12 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter2D(Collider2D other){
+    	if (other.gameObject.tag == "Player"){
+        	Destroy(this.gameObject);
+    	}
+	}
+
     public void SetDirection(Vector2 newDirection)
     {
         _direction = Vector3.Normalize(newDirection);

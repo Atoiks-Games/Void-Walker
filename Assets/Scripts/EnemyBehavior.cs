@@ -11,6 +11,9 @@ public class EnemyBehavior : MonoBehaviour
 
     private const float _bulletCooldown = 2.0f;
 
+    private int sparks = 8;
+	public GameObject sparkPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +23,6 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(player.transform.position);
         _time += Time.deltaTime;
         if (_time > _bulletCooldown)
         {
@@ -32,4 +34,24 @@ public class EnemyBehavior : MonoBehaviour
             bulletComponent.SetDirection(_playerPos.position - position);
         }
     }
+
+    void OnTriggerEnter2D(Collider2D other){
+    	if (other.gameObject.tag == "Player"){
+        	this.SelfDestruct();
+    	}
+	}
+
+    public void SelfDestruct(){
+		Vector3 dir = new Vector3(1, 0, 0);
+		for(int i = 0; i < sparks; i++)
+        {
+			GameObject newSpark = Instantiate(sparkPrefab);
+			newSpark.transform.position = transform.position;
+			float angleDir = Mathf.Deg2Rad * i * 360/sparks;
+			dir = new Vector3(dir.x * Mathf.Cos(angleDir) - dir.y * Mathf.Sin(angleDir), dir.x * Mathf.Sin(angleDir) + dir.y * Mathf.Cos(angleDir), 0);
+			DeathSpark sparkComponent = newSpark.GetComponent<DeathSpark>();
+			sparkComponent.SetDirection(dir);
+        }
+		Destroy(this.gameObject);
+	}
 }
