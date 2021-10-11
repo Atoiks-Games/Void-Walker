@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour {
 	//Movement
-	private float spd = 10;
-	private float fspd = 2;
+	private float spd = 8;
+	private float fspd = 3;
 	private float moveBuff = 5;
 	private Vector3 moveStore;
 	//Rendering
@@ -27,10 +27,10 @@ public class PlayerControl : MonoBehaviour {
 	void Update () {
 		//Movment and Focus Rendering
 		if(Input.GetAxisRaw("Focus") > 0){
+			moveStore = new Vector3(0,0,0);;
 			spriteRender.sprite = focSprite;
 			spriteRender.color = focCol;
 			transform.position += new Vector3(Input.GetAxisRaw("Horizontal") * Time.deltaTime * fspd, Input.GetAxisRaw("Vertical") * Time.deltaTime * fspd, 0);
-			moveStore = new Vector3(0,0,0);
 		}else{
 			spriteRender.sprite = defSprite;
 			spriteRender.color = defCol;
