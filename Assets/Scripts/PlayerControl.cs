@@ -43,6 +43,14 @@ public class PlayerControl : MonoBehaviour {
 			moveStore -= moveDelta;
 		}
 
+		Camera m_cam = Camera.main;
+		int scrw = m_cam.pixelWidth;
+		int scrh = m_cam.pixelHeight;
+		Vector3 screenPos = m_cam.WorldToScreenPoint(transform.position);
+		if(screenPos.x >= scrw | screenPos.x <= 0 | screenPos.y >= scrh | screenPos.y <= 0 ){
+			this.SelfDestruct();
+		}
+
 		//Shooting
 		//Defense
 		//Pause/Menu
