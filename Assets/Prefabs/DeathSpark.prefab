@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e550f91981641824894bea7c45bd7078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spr1: {fileID: 2694398321120540739, guid: 4d7d3c25e46694a4b91f22d3faff123e, type: 3}
+  spr1: {fileID: -542410134964432110, guid: 4d7d3c25e46694a4b91f22d3faff123e, type: 3}
   spr2: {fileID: 3670743373871512706, guid: 4d7d3c25e46694a4b91f22d3faff123e, type: 3}
   spr3: {fileID: -9190734958025796522, guid: 4d7d3c25e46694a4b91f22d3faff123e, type: 3}
   col1: {r: 1, g: 0, b: 0, a: 0.49019608}

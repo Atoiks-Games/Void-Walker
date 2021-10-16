@@ -27,7 +27,7 @@ public class EnemyBehavior : MonoBehaviour
         if (_time > _bulletCooldown)
         {
             _time = 0;
-            GameObject newBullet = Instantiate(bulletPrefab);
+            GameObject newBullet = Instantiate(bulletPrefab, transform.parent);
             Vector3 position = transform.position;
             newBullet.transform.position = position;
             Bullet bulletComponent = newBullet.GetComponent<Bullet>();

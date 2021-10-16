@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,8 @@ public class PlayerControl : MonoBehaviour {
 	private SpriteRenderer spriteRender;
 	private int sparks = 16;
 	public GameObject sparkPrefab;
+
+	private List<Action<GameObject>> _deathCallbacks = new List<Action<GameObject>>();
 	//Shooting
 	//Defense
 	//Pause/Menu
@@ -67,7 +70,7 @@ public class PlayerControl : MonoBehaviour {
 		Vector3 dir = new Vector3(1, 0, 0);
 		for(int i = 0; i < sparks; i++)
         {
-			GameObject newSpark = Instantiate(sparkPrefab);
+			GameObject newSpark = Instantiate(sparkPrefab, transform.parent);
 			newSpark.transform.position = transform.position;
 			float angleDir = Mathf.Deg2Rad * i * 360/sparks;
 			dir = new Vector3(dir.x * Mathf.Cos(angleDir) - dir.y * Mathf.Sin(angleDir), dir.x * Mathf.Sin(angleDir) + dir.y * Mathf.Cos(angleDir), 0);
@@ -77,6 +80,16 @@ public class PlayerControl : MonoBehaviour {
 			sparkComponent.col3 = focCol;
 			sparkComponent.SetDirection(dir);
         }
+
+		foreach (Action<GameObject> callback in _deathCallbacks)
+		{
+			callback(this.gameObject);
+		}
 		Destroy(this.gameObject);
+	}
+
+	public void AddDeathCallback(Action<GameObject> callback)
+	{
+		_deathCallbacks.Add(callback);
 	}
 }
