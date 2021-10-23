@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 4437100707009657908, guid: fedf837b8c5ffdc429656299755003b6, type: 3}
+  camera: {fileID: 0}
 --- !u!114 &9194132315613670033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,3 +60,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   editorEnemyPrefabArray:
   - {fileID: 8909902573150778298, guid: 04c1cd3525a9440e9b1d4dbec2232e15, type: 3}
+  - {fileID: 5142824025264909498, guid: 9f2361109f0c34afa8f79c0231f17cba, type: 3}

@@ -7,11 +7,11 @@ public class EnemyBehavior : MonoBehaviour
     public GameObject player;
     public GameObject bulletPrefab;
     public Transform _playerPos;
-    private float _time = 0.0f;
+    protected float _time = 0.0f;
 
-    private const float _bulletCooldown = 2.0f;
+    protected const float _bulletCooldown = 2.0f;
 
-    private int sparks = 8;
+    protected int sparks = 8;
 	public GameObject sparkPrefab;
 
     // Start is called before the first frame update
@@ -31,7 +31,7 @@ public class EnemyBehavior : MonoBehaviour
             Vector3 position = transform.position;
             newBullet.transform.position = position;
             Bullet bulletComponent = newBullet.GetComponent<Bullet>();
-            bulletComponent.SetDirection(_playerPos.position - position);
+            bulletComponent.InitializeBullet();
         }
     }
 

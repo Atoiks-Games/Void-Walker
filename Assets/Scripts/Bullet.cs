@@ -2,46 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public struct BulletInitializationData
 {
-    private float spd = 10f;
-    private Vector3 _direction = Vector2.left;
-    private SpriteRenderer render;
+}
 
-//    private float _timeOnScreen = 0.0f;
-//    private const float DESTROY_AFTER = 5.0f;
+public abstract class Bullet : MonoBehaviour
+{
+    protected SpriteRenderer Render;
 
-    void Start()
+    protected void Start()
     {
-        render = GetComponent<SpriteRenderer>();
+        Render = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
-    void Update()
+    public abstract void Update();
+
+    void OnTriggerEnter2D(Collider2D other)
     {
-        transform.position += _direction * Time.deltaTime * spd;
-
-//        _timeOnScreen += Time.deltaTime;
-//        if (_timeOnScreen > DESTROY_AFTER)
-//        {
-//            Destroy(this.gameObject);
-//        }
-
-        // To save on memory, let's check if the bullet is off-screen and destroy it
-        if (!render.isVisible)
+        if (other.gameObject.CompareTag("Player"))
         {
             Destroy(this.gameObject);
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other){
-    	if (other.gameObject.tag == "Player"){
-        	Destroy(this.gameObject);
-    	}
-	}
+    public abstract void InitializeBullet();
 
-    public void SetDirection(Vector2 newDirection)
+    public void InitializeBullet(BulletInitializationData bulletInitializationData)
     {
-        _direction = Vector3.Normalize(newDirection);
+        InitializeBullet();
     }
 }
