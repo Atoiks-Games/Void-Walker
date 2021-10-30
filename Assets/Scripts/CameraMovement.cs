@@ -11,8 +11,6 @@ public class CameraMovement : MonoBehaviour
     private Vector3 campos;
     private float height;
     private float moveBuff = 1;
-    private float maxy = 100;
-    private float miny = 0;
     private Vector3 moveStore = new Vector3 (0,0,0);
 
     void Start(){
