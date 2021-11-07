@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class LevelLoader : MonoBehaviour
 
     private string _levelFilePath;
 
+
     private void LoadLevelData(string levelFilePath)
     {
         if (levelFilePath == _levelFilePath)
@@ -24,11 +26,25 @@ public class LevelLoader : MonoBehaviour
         _levelFilePath = levelFilePath;
     }
 
-    public GameObject LoadLevel(string levelFilePath, Transform parentTransform)
+    public GameObject LoadLevel(string levelFilePath, Transform parentTransform, ShieldType shieldType)
     {
         LoadLevelData(levelFilePath);
         GameObject newPlayer = Instantiate(player, parentTransform);
         newPlayer.transform.position = new Vector3(0, 0, 0);
+        switch (shieldType)
+        {
+            case ShieldType.Stationary:
+                newPlayer.AddComponent<StationaryShieldGenerator>();
+                break;
+            case ShieldType.Moving:
+                newPlayer.AddComponent<MovingShieldGenerator>();
+                break;
+            case ShieldType.None:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(shieldType), shieldType, null);
+        }
+
         GameObject m_cam = Instantiate(camera, parentTransform);
         m_cam.transform.position = new Vector3(0, 0, cam_z);
         CameraMovement camComponent = m_cam.GetComponent<CameraMovement>();

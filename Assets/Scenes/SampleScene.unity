@@ -682,12 +682,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 585642153}
   m_CullTransparentMesh: 1
---- !u!1 &1086505483 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9194132315613670127, guid: ed903b93c53aa481fb063b3a0a5e48c8,
-    type: 3}
-  m_PrefabInstance: {fileID: 88802415}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1203849958
 GameObject:
   m_ObjectHideFlags: 0
@@ -717,8 +711,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb0a56fb73ba4d4d9bdd81c813109a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelLoaderObject: {fileID: 1086505483}
-  PauseMenu: {fileID: 262026237}
+  levelLoaderObject: {fileID: 1499192228}
+  pauseMenu: {fileID: 262026237}
 --- !u!4 &1203849960
 Transform:
   m_ObjectHideFlags: 0
@@ -733,6 +727,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1499192228 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9194132315613670127, guid: ed903b93c53aa481fb063b3a0a5e48c8,
+    type: 3}
+  m_PrefabInstance: {fileID: 88802415}
+  m_PrefabAsset: {fileID: 0}
 --- !u!850595691 &2004845145
 LightingSettings:
   m_ObjectHideFlags: 0

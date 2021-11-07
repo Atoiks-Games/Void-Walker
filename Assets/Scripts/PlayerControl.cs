@@ -10,7 +10,7 @@ public class PlayerControl : MonoBehaviour
     private float fspd = 3;
     private float moveBuff = 5;
 
-    private Vector3 moveStore;
+    private Vector3 _moveStore;
 
     //Rendering
     public Sprite defSprite;
@@ -18,13 +18,16 @@ public class PlayerControl : MonoBehaviour
     public Color defCol;
     public Color transCol;
     public Color focCol;
-    private SpriteRenderer spriteRender;
+    private SpriteRenderer _spriteRender;
     private int sparks = 16;
     public GameObject sparkPrefab;
 
+    public GameObject shieldObject;
+    private PlayerShieldGenerator _shieldGenerator;
+
     public static PlayerControl Instance { get; private set; }
 
-    private List<Action<GameObject>> _deathCallbacks = new List<Action<GameObject>>();
+    private readonly List<Action<GameObject>> _deathCallbacks = new List<Action<GameObject>>();
     //Shooting
     //Defense
     //Pause/Menu
@@ -33,7 +36,8 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         Instance = this;
-        spriteRender = this.GetComponent<SpriteRenderer>();
+        _spriteRender = this.GetComponent<SpriteRenderer>();
+        _shieldGenerator = this.GetComponent<PlayerShieldGenerator>();
     }
 
     // Update is called once per frame
@@ -42,22 +46,22 @@ public class PlayerControl : MonoBehaviour
         //Movment and Focus Rendering
         if (Input.GetAxisRaw("Focus") > 0)
         {
-            moveStore = new Vector3(0, 0, 0);
+            _moveStore = new Vector3(0, 0, 0);
             ;
-            spriteRender.sprite = focSprite;
-            spriteRender.color = focCol;
+            _spriteRender.sprite = focSprite;
+            _spriteRender.color = focCol;
             transform.position += new Vector3(Input.GetAxisRaw("Horizontal") * Time.deltaTime * fspd,
                                               Input.GetAxisRaw("Vertical") * Time.deltaTime * fspd, 0);
         }
         else
         {
-            spriteRender.sprite = defSprite;
-            spriteRender.color = defCol;
-            moveStore += new Vector3(Input.GetAxisRaw("Horizontal") * Time.deltaTime * spd,
-                                     Input.GetAxisRaw("Vertical") * Time.deltaTime * spd, 0);
-            Vector3 moveDelta = moveBuff * Time.deltaTime * moveStore;
+            _spriteRender.sprite = defSprite;
+            _spriteRender.color = defCol;
+            _moveStore += new Vector3(Input.GetAxisRaw("Horizontal") * Time.deltaTime * spd,
+                                      Input.GetAxisRaw("Vertical") * Time.deltaTime * spd, 0);
+            Vector3 moveDelta = moveBuff * Time.deltaTime * _moveStore;
             transform.position += moveDelta;
-            moveStore -= moveDelta;
+            _moveStore -= moveDelta;
         }
 
         Camera m_cam = Camera.main;
@@ -69,6 +73,11 @@ public class PlayerControl : MonoBehaviour
             this.SelfDestruct();
         }
 
+        if (_shieldGenerator && Input.GetAxisRaw("Shield") > 0)
+        {
+            _shieldGenerator.TriggerShield(shieldObject);
+        }
+
         //Shooting
         //Defense
         //Pause/Menu
@@ -76,7 +85,7 @@ public class PlayerControl : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Bullet" | other.gameObject.tag == "Enemy")
+        if (other.gameObject.CompareTag("Bullet") | other.gameObject.CompareTag("Enemy"))
         {
             this.SelfDestruct();
         }
